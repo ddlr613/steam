@@ -1,0 +1,119 @@
+<% include ../partials/header %>
+<div class='container-fluid'>  
+        <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="http://localhost:3000/forum">All Discussions</a></li>
+                <li class="breadcrumb-item"><a href="http://localhost:3000/your_forum">Your Discussions</a></li>
+            </ul>
+        <% items.forEach(function(item, index) { %> 
+        <h1><strong><%=  item.question %></strong></h1>
+        <% if(item.status=='Open'){ %>
+           <% if(session == item.facultyID){ %>
+                <form action="http://localhost:3000/markclosed" method="POST" class="form-size">
+                    <input type="hidden" class='form-control' name="id" id="id" value="<%= item.discussionID %>" required>
+                    <button class='btn upd  btn-info' id='submit' name='submit' type='submit'>MARK AS CLOSED</button>
+                </form>
+               
+            <% } %>
+        <% }else{ %>
+            <button class="btn disabled"><strong>CLOSED</strong></button>
+       <% } %>
+        <div class='row'>
+                <div class="col-lg-12">
+                     <h4>By: <% if(item.facID==session){ %> 
+                                You
+                             <% }else{ %>
+                                <%=  item.fName %> <%=  item.lName %>
+                            <% } %>
+                    </h4>
+                </div>
+        </div>
+        <div class='row'>
+            <div class="col-lg-12">
+                    <div class='card'>
+                        <div class='card-body'>
+                                <p class="mb-1"><%=  item.description %></p>
+                                <small>Posted on: <%=  item.date_added %></small>
+                                
+                        </div>    
+                     </div>
+                     <div> 
+                         <% if(item.status=='Open'){ %>
+                        <form action="http://localhost:3000/comment" method="POST" class="form-size">
+                            <div class="form-group">
+                                <input type="hidden" class='form-control' name="id" id="id" value="<%= item.discussionID %>" required>
+                            </div>
+                            <div class='form-group'>              
+                                <textarea class='form-control' name="comment" id="comment" placeholder="Write your discussion" required></textarea>
+                            </div>
+                            <button  class='btn btn-success btn-lg float-right' id='submit' name='submit' type='submit'>Post</button>
+                        </form>
+                        <% } %>
+                    </div>
+                    <br>
+                     <br> 
+                     <br>
+                     <div class='ex1 card' id='comments'>
+                            
+                            <div class="card-body">
+                                   
+                                    <% }); %>
+                                    <h5 class='card-title'>RESPONSES</h5>
+                                    <% items2.forEach(function(item2, index) { %> 
+                                        <div class="list-group">
+                                                <a class="list-group-item list-group-item-action flex-column align-items-start ">
+                                                  <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">
+                                                        <%=  item2.fName %> <%=  item2.lName %>
+                                                        <% if(item2.facID==session){  %>
+                                                            (You)
+                                                        <% } %>
+                                                    </h5>
+                                                    <small><%=  item2.date_added %></small>
+                                                  </div>
+                                                  <p class="mb-1"><%=  item2.comment %></p>
+                                                  <small></small>
+                                                </a>
+                                        </div>
+                                    <% }); %>
+                                   
+                            </div>
+                        </div>
+            </div>
+        </div>
+   
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class='container-fluid' >
+        <div class='card' >
+            <div class="card-body" id='subjects'>
+                    <ul class='list-inline'>
+                            <li class="list-inline-item">Science</li>
+                            <li class="list-inline-item">Technology</li>
+                            <li class="list-inline-item">Engineering</li>
+                            <li class="list-inline-item">Agriculture</li>
+                            <li class="list-inline-item">Fisheries</li>
+                            <li class="list-inline-item">Mathematics</li>
+                      </ul>
+            </div>       
+        </div>
+    </div>
+<script>
+    $(".del").on("click",function(){
+            return confirm("Delete Activity?");
+    });
+
+    $(".upd").on("click",function(){
+            return confirm("Close Discussion?");
+    });
+    </script>
+<% include ../partials/footer %>

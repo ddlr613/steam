@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+<div class='container-fluid'>   
+        <h1>
+            SUGGESTED ACTIVITIES
+        </h1><br>
+        <div class='row'>
+            <div class="col-lg-12">
+                    <div class='card'>
+                            <form action="http://localhost:3000/updateact" method="POST" class="form-size">
+                                <div class='card-body'>
+                              <% items.forEach(function(item, index) { %>
+                              <table class='uk-table'>
+                                    <div class='form-group'>
+                                            <tr>
+                                                  <td><input type="hidden" class='form-control' value='<%=  item.suggActivityID %>' name="id" id="id" required></td>
+                                           </tr>
+                                          </div>
+                              <div class='form-group'>
+                                <tr>
+                                      <td align='center'><label for='address'>Title: </label></td>   
+                                      <td><input type="text" class='form-control' value='<%=  item.title %>' name="title" id="title" required></td>
+                               </tr>
+                              </div>
+                                  
+                              <div class='form-group'>
+                                  <tr>
+                                      <td align='center'><label for='address'>Directions: </label></td>   
+                                      <td><textarea name="content"  id='content' cols="50" rows="10" required><%=  item.content %></textarea></td>
+                                  </tr>
+                              </div>
+                              
+                              </table>
+                              <br>
+                              <button  class='btn btn-success pull-right'  id='submit' name='submit' type='submit'>Update</button>
+                              <% }); %> 
+                              </form>   
+                            </div>
+                            </div>
+            </div>
+        </div>
+   
+</div>
+<br>
+    
+
+
+
+<div class='card' id='subjects'>
+    <ul class='list-inline'>
+          <li class="list-inline-item">Science</li>
+          <li class="list-inline-item">Technology</li>
+          <li class="list-inline-item">Engineering</li>
+          <li class="list-inline-item">Agriculture</li>
+          <li class="list-inline-item">Fisheries</li>
+          <li class="list-inline-item">Mathematics</li>
+    </ul>
+</div>
+
+<% include ../partials/footer %>

@@ -1,0 +1,138 @@
+<% include ../partials/header %>
+<div class='container-fluid'>   
+        <h1 align='center'>FORUM</h1>
+        <a align='right'><button class='btn btn-lg btn-primary float-right' data-toggle="modal" data-target="#myModal">ADD DISCUSSION</button></a>
+        <br> 
+        <br> 
+        <br> 
+        <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="http://localhost:3000/forum">All Discussions</a></li>
+                <li class="breadcrumb-item active">Your Discussions</li>
+            </ul>
+        <div class='row'>
+            <div class="col-lg-12">
+                    <div class='card'>
+                        <table id="example" class="row-border" style="width:100%">
+                            <thead>
+                                <tr>
+                                <th class='no-sort'></th>
+                                <th>Question</th>
+                                <th>Date Posted</th>
+                                <th>Status</th>
+                                <th class='no-sort'></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% items.forEach(function(item, index) { %>  
+                                <tr> 
+                                 <td align='center'>
+                                        <a  href="http://localhost:3000/edit_forum?id=<%=item.discussionID %>" class="edt"><button class='btn btn-sm btn-warning pull-right'>Edit</button></a>
+                                </td>
+                                <td class='question'><strong><a href="http://localhost:3000/forum_details?id=<%= item.discussionID %>"><%=  item.question %></a></strong></td>
+                                <td><%=  item.date_added %></td>
+                                <td><%= item.status %></td>
+                                <td align='center'>
+                                    <% if(item.status=='Open'){ %> 
+                                        <a  href="http://localhost:3000/deleteforum?id=<%=item.discussionID %>" class="del"><button class='btn btn-sm btn-danger pull-right'>Delete</button></a>
+                                    <% } %>
+                                </td>
+                               </tr>
+                            
+                                <% }); %>
+                            </tbody>
+                        </table>
+                          
+                              </div>
+                            </div>
+            </div>
+        </div>
+   
+</div>
+<br>
+    
+
+
+
+<div class='container-fluid' >
+        <div class='card' >
+            <div class="card-body" id='subjects'>
+                    <ul class='list-inline'>
+                            <li class="list-inline-item">Science</li>
+                            <li class="list-inline-item">Technology</li>
+                            <li class="list-inline-item">Engineering</li>
+                            <li class="list-inline-item">Agriculture</li>
+                            <li class="list-inline-item">Fisheries</li>
+                            <li class="list-inline-item">Mathematics</li>
+                      </ul>
+                     
+            </div>       
+        </div>
+    </div>
+    <% include ../partials/footer %>
+<script>
+$(document).ready(function() {
+    $('#example').dataTable( {
+  "columnDefs": [
+    { "width": "10%", "targets": 3},
+    { "width": "50%", "targets": 1}
+    ,{
+      "targets"  : 'no-sort',
+      "orderable": false
+    }
+  ],
+  "order": [[ 2, "desc" ]]
+  
+} ); 
+} );
+
+$(".del").on("click",function(){
+            return confirm("Delete Discussion?");
+    });
+</script>
+<div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 align='center' class="modal-title">ADD DISCUSSION</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                    <form action="http://localhost:3000/createforum" method="POST" class="form-size">
+                        <div class='card-body'>
+                     
+                    
+                                <div class='form-group'>          
+                                        <label for='address'>Category: </label> 
+                                        <select class='form-control' name="category" id="category" required>
+                                               <option value="Science">Science</option>
+                                               <option value="Technology">Technology</option>
+                                               <option value="Engineering">Engineering</option>
+                                               <option value="Agriculture and Fisheries">Agriculture and Fisheries</option>
+                                               <option value="Mathematics">Mathematics</option>
+                                             </select>
+                                 </div>
+
+                      <div class='form-group'>          
+                             <label for='address'>Question: </label> 
+                              <input type="text" class='form-control' name="question" id="question" required>
+                      </div>
+                          
+                      <div class='form-group'>
+                              <label for='address'>Details: </label> 
+                              <textarea name="description" class='form-control' id='description' cols="50" rows="10" required></textarea>
+                      </div>                   
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                    <button float='right' class='btn btn-success pull-right' id='submit' name='submit' type='submit'>+ ADD</button>
+                </form>
+            </div>
+            
+          </div>
+        </div>
+      </div> 

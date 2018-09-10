@@ -1,0 +1,132 @@
+<% include ../partials/header %>
+<div class='container-fluid'>   
+        <h1 align='center'>FORUM</h1>
+        <a align='right'><button class='btn btn-lg btn-primary float-right' data-toggle="modal" data-target="#myModal">ADD DISCUSSION</button></a>
+        <br> 
+        <br> 
+        <br> 
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">All Discussions</li>
+            <li class="breadcrumb-item"><a href="http://localhost:3000/your_forum">Your Discussions</a></li>
+          </ol>
+        <div class='row'>
+            <div class="col-lg-12">
+                    <div class='card'>
+                        <table id="example" class="row-border" style="width:100%">
+                            <thead>
+                                <tr>
+                                <th>Question</th>
+                                <th>Category</th>
+                                <th>Posted By</th>
+                                <th>Status</th>
+                                <th>Date Posted</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% items.forEach(function(item, index) { %>  
+                                
+                                <tr> 
+                                <td class='question'><strong><a href="http://localhost:3000/forum_details?id=<%= item.discussionID %>"><%=  item.question %></a></strong></td>
+                                <td><%=  item.category %></td>
+                                <td>
+                                        <%=  item.fName %> <%=  item.lName %>
+                                        <% if(item.facID==session){  %>
+                                            (You)
+                                        <% } %>
+                                </td>
+                                <td><%= item.status %></td>
+                                <td><%=  item.date_added %></td>
+                            
+                               </tr>
+                            
+                                <% }); %>
+                            </tbody>
+                        </table>
+                          
+                              </div>
+                            </div>
+            </div>
+        </div>
+   
+</div>
+<br>
+<br>
+<br>
+<div class='container-fluid' >
+        <div class='card' >
+            <div class="card-body" id='subjects'>
+                    <ul class='list-inline'>
+                            <li class="list-inline-item">Science</li>
+                            <li class="list-inline-item">Technology</li>
+                            <li class="list-inline-item">Engineering</li>
+                            <li class="list-inline-item">Agriculture</li>
+                            <li class="list-inline-item">Fisheries</li>
+                            <li class="list-inline-item">Mathematics</li>
+                      </ul>
+            </div>       
+        </div>
+    </div>
+ 
+<script>
+$(document).ready(function() {
+    $('#example').dataTable( {
+  "columnDefs": [
+    { "width": "20%", "targets": 4},
+    { "width": "20%", "targets": 2},
+    { "width": "30%", "targets": 0}
+  ],
+  "order": [[ 4, "desc" ]]
+} );
+    
+} );
+
+</script>
+<% include ../partials/footer %>
+<div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 align='center' class="modal-title">ADD DISCUSSION</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                    <form action="http://localhost:3000/createforum" method="POST" class="form-size">
+                        <div class='card-body'>
+
+                                <div class='form-group'>          
+                                        <label for='address'>Category: </label> 
+                                        <select class='form-control' name="category" id="category" required>
+                                               <option value="Science">Science</option>
+                                               <option value="Technology">Technology</option>
+                                               <option value="Engineering">Engineering</option>
+                                               <option value="Agriculture and Fisheries">Agriculture and Fisheries</option>
+                                               <option value="Mathematics">Mathematics</option>
+                                             </select>
+                                 </div>
+                     
+                      <div class='form-group'>          
+                              <label for='address'>Question: </label> 
+                                   <input type="text" class='form-control' name="question" id="question" required>
+                      </div>
+
+                      
+                          
+                      <div class='form-group'>
+                              <label for='address'>Details: </label> 
+                              <textarea name="description" class='form-control' id='description' cols="50" rows="10" required></textarea>
+                      </div>
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                    <button float='right' class='btn btn-success pull-right' id='submit' name='submit' type='submit'>+ ADD</button>
+                </form>
+            </div>
+            
+          </div>
+        </div>
+      </div> 

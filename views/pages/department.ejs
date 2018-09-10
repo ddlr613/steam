@@ -1,0 +1,77 @@
+<% include ../partials/header %>
+<div class='container-fluid'>
+        <% items2.forEach(function(item2, index) { %>
+        <h1>
+                School of <%=  item2.name %>      
+        </h1><br>
+        <% }); %>
+        <div class='row'>
+            <div class="col-lg-4">
+                    <div class='card'>
+                            <h2 class="card-title">Add Department</h2>
+                                  <form action="http://localhost:3000/department" method="POST" class="form-size">
+                                      <div class='card-body'>
+                                    <table class='uk-table'>
+
+                                    <div class='form-group'>
+                                        <tr>
+                                           <% items2.forEach(function(item2, school) { %>      
+                                            <td><input type="hidden" class='form-control' name="id"
+                                                value="<%=  item2.schoolID %>"
+                                                id="id" required></td>
+                                         <% }); %>
+                                         </tr>
+                                    </div>
+                                        
+                                    <div class='form-group'>
+                                        <tr>
+                                            <td align='center'><label for='address'>Department of: </label></td>   
+                                            <td><input type="text" class='form-control' name="dept_name" id="dept_name" required></td>
+                                        </tr>
+                                    </div>
+                                    
+        
+                  
+                                    </table>
+                                    <br>
+                                    <button  class='btn btn-primary btn-lg pull-right' id='submit' name='submit' type='submit'>+ Add Department</button>
+                                    </form>
+                              </div>
+                            </div>
+            </div>
+            <div class="col-lg-8">
+                    <div class="card">
+                            <h2 class="card-title">ALL DEPARTMENTS</h2>
+                            <div class='card-body'>
+                                          <div class="list-group">
+                                                <% items.forEach(function(item, index) { %>
+                                                    <a href="/program?id=<%=item.deptID %>" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                      <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">Department of <%=  item.dept_name %> </h5>
+                                                      </div>
+                                                    </a>
+                                                 <% }); %>
+                                         </div>
+                                
+                            </div>
+                         </div> 
+            </div>
+        </div>
+        
+     </div>
+
+    
+
+
+
+<div class='card' id='subjects'>
+    <ul class='list-inline'>
+          <li class="list-inline-item">Science</li>
+          <li class="list-inline-item">Technology</li>
+          <li class="list-inline-item">Engineering</li>
+          <li class="list-inline-item">Agriculture</li>
+          <li class="list-inline-item">Fisheries</li>
+          <li class="list-inline-item">Mathematics</li>
+    </ul>
+</div>
+<% include ../partials/footer %>
